@@ -20,18 +20,59 @@ body, html {
 }
 
 @keyframes slideshow {
-    0% { background-image: url('./images/bg1.jpg'); }
-    25% { background-image: url('./images/bg2.jpg'); }
-    50% { background-image: url('./images/bg3.jpg'); }
-    75% { background-image: url('./images/bg4.jpg'); }
-    100% { background-image: url('./images/bg5.jpg'); }
+    0% { background-image: url('https://gggccclll.github.io/Happy-Birthday/images/bg1.jpg'); }
+    25% { background-image: url('https://gggccclll.github.io/Happy-Birthday/images/bg2.jpg'); }
+    50% { background-image: url('https://gggccclll.github.io/Happy-Birthday/images/bg3.jpg'); }
+    75% { background-image: url('https://gggccclll.github.io/Happy-Birthday/images/bg4.jpg'); }
+    100% { background-image: url('https://gggccclll.github.io/Happy-Birthday/images/bg5.jpg'); }
+}
+
+.image-carousel {
+    position: relative;
+    max-width: 800px;
+    margin: 20px auto;
+    overflow: hidden;
+    border-radius: 15px;
+    box-shadow: 0 0 20px rgba(255, 182, 193, 0.8);
+}
+
+.carousel-slides {
+    display: flex;
+    transition: transform 0.5s ease;
+}
+
+.carousel-slides img {
+    width: 100%;
+    height: auto;
+    border-radius: 15px;
+}
+
+.image-carousel .prev, 
+.image-carousel .next {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(0,0,0,0.5);
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 50%;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
 }
 
 .container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    text-align: center;
 }
 
 .message-box {
