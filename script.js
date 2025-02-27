@@ -1,3 +1,73 @@
+// 轮播图功能
+const carousel = document.querySelector('.image-carousel');
+const slides = document.querySelector('.carousel-slides');
+const prevBtn = document.querySelector('.image-carousel .prev');
+const nextBtn = document.querySelector('.image-carousel .next');
+let currentIndex = 0;
+let autoPlayInterval;
+
+function showSlide(index) {
+    const offset = -index * 100;
+    slides.style.transform = `translateX(${offset}%)`;
+}
+
+function nextSlide() {
+    currentIndex = (currentIndex + 1) % slides.children.length;
+    showSlide(currentIndex);
+}
+
+function prevSlide() {
+    currentIndex = (currentIndex - 1 + slides.children.length) % slides.children.length;
+    showSlide(currentIndex);
+}
+
+function startAutoPlay() {
+    autoPlayInterval = setInterval(nextSlide, 5000);
+}
+
+function stopAutoPlay() {
+    clearInterval(autoPlayInterval);
+}
+
+// 初始化轮播
+showSlide(currentIndex);
+startAutoPlay();
+
+// 事件监听
+prevBtn.addEventListener('click', () => {
+    stopAutoPlay();
+    prevSlide();
+    startAutoPlay();
+});
+
+nextBtn.addEventListener('click', () => {
+    stopAutoPlay();
+    nextSlide();
+    startAutoPlay();
+});
+
+// 触摸滑动支持
+let touchStartX = 0;
+let touchEndX = 0;
+
+carousel.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+});
+
+carousel.addEventListener('touchend', (e) => {
+    touchEndX = e.changedTouches[0].clientX;
+    handleSwipe();
+});
+
+function handleSwipe() {
+    const swipeThreshold = 50;
+    if (touchStartX - touchEndX > swipeThreshold) {
+        nextSlide();
+    } else if (touchEndX - touchStartX > swipeThreshold) {
+        prevSlide();
+    }
+}
+
 // 页面加载后立即播放音乐
 window.addEventListener('load', function() {
     const bgMusic = document.getElementById('bg-music');
@@ -5,28 +75,6 @@ window.addEventListener('load', function() {
     
     // 自动播放音乐
     const playPromise = bgMusic.play();
-    if (playPromise !== undefined) {
-        playPromise.catch(error => {
-            // 自动播放被阻止时显示提示
-            const playHint = document.createElement('div');
-            playHint.textContent = '';
-            playHint.style.position = 'fixed';
-            playHint.style.bottom = '60px';
-            playHint.style.right = '20px';
-            playHint.style.color = '#fff';
-            playHint.style.fontSize = '14px';
-            document.body.appendChild(playHint);
-            
-            // 添加点击播放功能
-            document.body.addEventListener('click', function() {
-                if (bgMusic.paused) {
-                    bgMusic.play();
-                    playHint.remove();
-                }
-            }, { once: true });
-        });
-    }
-    
     if (playPromise !== undefined) {
         playPromise.catch(error => {
             // 自动播放被阻止时显示提示
